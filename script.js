@@ -8,13 +8,13 @@ const superContainer = document.querySelector("#super-container");
 for (let i = 0; i < 16; i++) {
     let hContainer = document.createElement("div");
     hContainer.classList.add("bordered-container-red");
-    hContainer.textContent = `Horizontal Container No. ${i+1}`;
+    // hContainer.textContent = `Horizontal Container No. ${i+1}`;
     superContainer.append(hContainer);
 
     for (let j = 0; j <16; j++) {
         let vContainer = document.createElement("div");
         vContainer.classList.add("bordered-container-blue");
-        vContainer.textContent = `Vertical Container No. ${j+1}`;
+        vContainer.textContent = `(${j+1}, ${i+1})`;
         hContainer.append(vContainer);
     }
 }

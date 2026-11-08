@@ -1,7 +1,16 @@
+#super-container {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+}
+
 .bordered-container-red {
     border: 2px solid red;
+    display: flex;
+    flex: 1;
 }
 
 .bordered-container-blue {
     border: 2px solid blue;
+    flex: 1;
 }
