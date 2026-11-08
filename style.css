@@ -32,3 +32,8 @@
 #ultimate-container {
     display: flex;
 }
+
+#menu-container {
+    display: flex;
+    flex-direction: column;
+}
