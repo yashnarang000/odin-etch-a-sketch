@@ -20,3 +20,7 @@
 .hovered-upon {
     background-color: yellow;
 }
+
+#ultimate-container {
+    display: flex;
+}

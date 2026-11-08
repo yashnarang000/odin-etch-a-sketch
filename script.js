@@ -1,4 +1,32 @@
+function toggleMouse(event) {
+    // let isToggled = event.target.className;
+
+    if (event.target.className == "True") {
+        event.target.className = "False";
+    }
+
+    else {
+        event.target.className = "True";
+    }
+
+    if (mouseToggler.className == "True") {
+    superContainer.style.cursor = "none";
+}
+
+    else {
+        superContainer.style.cursor = "auto";
+    }
+}
+
+const menuContainer = document.querySelector("#menu-container");
 const superContainer = document.querySelector("#super-container");
+
+const mouseToggler = document.createElement("button");
+mouseToggler.textContent = "Toggle Mouse Cursor";
+mouseToggler.className = "False";
+mouseToggler.addEventListener("click", toggleMouse);
+menuContainer.appendChild(mouseToggler);
+
 
 for (let i = 0; i < 16; i++) {
     let hContainer = document.createElement("div");
@@ -17,3 +45,4 @@ for (let i = 0; i < 16; i++) {
         hContainer.append(vContainer);
     }
 }
+
