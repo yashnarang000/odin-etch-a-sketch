@@ -25,6 +25,44 @@ function modulatePixels(event) {
     createGrid();
 }
 
+function toggleColorIncrease(event) {
+    if (event.target.dataset.status == "True") {
+        event.target.dataset.status = "False";
+    }
+
+    else {
+        event.target.dataset.status = "True";
+    }
+
+    createGrid();
+}
+
+function increaseColor(vContainer, isFirstTime) {
+    if (isFirstTime) {
+        vContainer.style.opacity = 0.1;
+        isFirstTime = false;
+    }
+
+    else {
+        if (parseFloat(vContainer.style.opacity) == 1.0) {}
+        else {vContainer.style.opacity = parseFloat(vContainer.style.opacity) + 0.1;}
+    }
+
+    console.log(vContainer.style.opacity);
+
+    return isFirstTime;
+}
+
+function getRandomRGB() {
+    let r = Math.floor(Math.random()*256);
+    let g = Math.floor(Math.random()*256);
+    let b = Math.floor(Math.random()*256);
+
+    let rgbValue = `rgb(${r}, ${g}, ${b})`; 
+    // console.log(rgbValue);
+    return rgbValue;
+}
+
 function createGrid() {
     superContainer.innerHTML = "";
     for (let i = 0; i < pixelsModulator.dataset.nSquare; i++) {
@@ -33,11 +71,17 @@ function createGrid() {
         superContainer.append(hContainer);
 
         for (let j = 0; j < pixelsModulator.dataset.nSquare; j++) {
+            let isFirstTime = true;
             let vContainer = document.createElement("div");
             vContainer.classList.add("square");
 
             vContainer.addEventListener("mouseenter", () => {
-                vContainer.classList.add("hovered-upon");
+                vContainer.style.backgroundColor = getRandomRGB();
+                
+                if (colorStepper.dataset.status == "True") {
+                    isFirstTime = increaseColor(vContainer, isFirstTime);
+                }
+
             });
 
             hContainer.append(vContainer);
@@ -59,5 +103,11 @@ pixelsModulator.textContent = "Change Pixels Quantity";
 pixelsModulator.dataset.nSquare = 16;
 pixelsModulator.addEventListener("click", modulatePixels);
 menuContainer.appendChild(pixelsModulator);
+
+const colorStepper = document.createElement("button");
+colorStepper.textContent = "Toggle Increasing Color Feature";
+colorStepper.dataset.status = "False";
+colorStepper.addEventListener("click", toggleColorIncrease);
+menuContainer.appendChild(colorStepper);
 
 createGrid();

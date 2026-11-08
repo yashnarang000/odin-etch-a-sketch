@@ -25,9 +25,9 @@
     min-height: 0;
 }
 
-.hovered-upon {
+/* .hovered-upon {
     background-color: yellow;
-}
+} */
 
 #ultimate-container {
     display: flex;
