@@ -1,6 +1,6 @@
 function toggleMouse(event) {
 
-    if (event.target.dataset.status == "True") {
+    if (event.target.dataset.status == "False") {
         superContainer.style.cursor = "none";
     }
 
