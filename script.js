@@ -1,17 +1,11 @@
 function toggleMouse(event) {
 
     if (event.target.dataset.status == "True") {
-
         superContainer.style.cursor = "none";
-        event.target.dataset.status = "False";
-
     }
 
     else {
-
         superContainer.style.cursor = "auto";
-        event.target.dataset.status = "True";
-
     }
 }
 
@@ -22,10 +16,11 @@ function modulatePixels(event) {
         alert("Invalid!");
         event.target.dataset.nSquare = 16;
     }
+    superContainer.innerHTML = "";
     createGrid();
 }
 
-function toggleColorIncrease(event) {
+function toggle(event) {
     if (event.target.dataset.status == "True") {
         event.target.dataset.status = "False";
     }
@@ -34,13 +29,13 @@ function toggleColorIncrease(event) {
         event.target.dataset.status = "True";
     }
 
-    createGrid();
+    // createGrid();
 }
 
-function increaseColor(vContainer, isFirstTime) {
-    if (isFirstTime) {
+function increaseColor(vContainer, isTouched) {
+    if (isTouched == false) {
         vContainer.style.opacity = 0.1;
-        isFirstTime = false;
+        isTouched = true;
     }
 
     else {
@@ -48,9 +43,27 @@ function increaseColor(vContainer, isFirstTime) {
         else {vContainer.style.opacity = parseFloat(vContainer.style.opacity) + 0.1;}
     }
 
-    console.log(vContainer.style.opacity);
+    // console.log(vContainer.style.opacity);
 
-    return isFirstTime;
+    return isTouched;
+}
+
+function brush(event, isTouched) {
+    if (event.target.dataset.isColorful == "True") {
+    event.target.style.backgroundColor = getRandomRGB();
+    }
+
+    else {
+        event.target.style.backgroundColor = "yellow";
+    }
+    
+    // console.log(event.target.dataset.isColorful);
+
+    if (colorStepper.dataset.status == "True") {
+        isTouched = increaseColor(event.target, isTouched);
+    }
+
+    return isTouched;
 }
 
 function getRandomRGB() {
@@ -64,24 +77,19 @@ function getRandomRGB() {
 }
 
 function createGrid() {
-    superContainer.innerHTML = "";
     for (let i = 0; i < pixelsModulator.dataset.nSquare; i++) {
         let hContainer = document.createElement("div");
         hContainer.classList.add("row-container");
         superContainer.append(hContainer);
 
         for (let j = 0; j < pixelsModulator.dataset.nSquare; j++) {
-            let isFirstTime = true;
+            let isTouched = false;
             let vContainer = document.createElement("div");
             vContainer.classList.add("square");
 
-            vContainer.addEventListener("mouseenter", () => {
-                vContainer.style.backgroundColor = getRandomRGB();
-                
-                if (colorStepper.dataset.status == "True") {
-                    isFirstTime = increaseColor(vContainer, isFirstTime);
-                }
-
+            vContainer.addEventListener("mouseenter", (event) => {
+                vContainer.dataset.isColorful = colorfulToggler.dataset.status;
+                isTouched = brush(event, isTouched);
             });
 
             hContainer.append(vContainer);
@@ -95,7 +103,10 @@ const superContainer = document.querySelector("#super-container");
 const mouseToggler = document.createElement("button");
 mouseToggler.textContent = "Toggle Mouse Cursor";
 mouseToggler.dataset.status = "True";
-mouseToggler.addEventListener("click", toggleMouse);
+mouseToggler.addEventListener("click", (event) => {
+    toggle(event);
+    toggleMouse(event);
+});
 menuContainer.appendChild(mouseToggler);
 
 const pixelsModulator = document.createElement("button");
@@ -107,7 +118,13 @@ menuContainer.appendChild(pixelsModulator);
 const colorStepper = document.createElement("button");
 colorStepper.textContent = "Toggle Increasing Color Feature";
 colorStepper.dataset.status = "False";
-colorStepper.addEventListener("click", toggleColorIncrease);
+colorStepper.addEventListener("click", toggle);
 menuContainer.appendChild(colorStepper);
+
+const colorfulToggler = document.createElement("button");
+colorfulToggler.textContent = "Toggle Colorful Brush";
+colorfulToggler.dataset.status = "False";
+colorfulToggler.addEventListener("click", toggle);
+menuContainer.appendChild(colorfulToggler);
 
 createGrid();
