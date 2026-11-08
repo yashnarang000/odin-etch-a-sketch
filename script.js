@@ -1,3 +1,10 @@
+function isValidColor(colorString) {
+    const image = new Option();
+    image.style.color = colorString;
+
+    return image.style.color !== '';
+}
+
 function toggleMouse(event) {
 
     if (event.target.dataset.status == "False") {
@@ -11,13 +18,23 @@ function toggleMouse(event) {
 
 function modulatePixels(event) {
     event.target.dataset.nSquare = parseInt(prompt("How many pixels do you want for the sketchpad? (Max: 100)"))
-    console.log(event.target.dataset.nSquare);
+    // console.log(event.target.dataset.nSquare);
     if (isNaN(event.target.dataset.nSquare) || event.target.dataset.nSquare > 100) {
         alert("Invalid!");
         event.target.dataset.nSquare = 16;
     }
     superContainer.innerHTML = "";
     createGrid();
+}
+
+function changeColor(event) {
+    let newColor = prompt("What color do you want for the brush?");
+    if (isValidColor(newColor)) {
+        event.target.dataset.currentColor = newColor;
+    }
+    else {
+        alert("Invalid!");
+    }
 }
 
 function toggle(event) {
@@ -54,7 +71,7 @@ function brush(event, isTouched) {
     }
 
     else {
-        event.target.style.backgroundColor = "yellow";
+        event.target.style.backgroundColor = colorSelect.dataset.currentColor;
     }
     
     // console.log(event.target.dataset.isColorful);
@@ -126,5 +143,11 @@ colorfulToggler.textContent = "Toggle Colorful Brush";
 colorfulToggler.dataset.status = "False";
 colorfulToggler.addEventListener("click", toggle);
 menuContainer.appendChild(colorfulToggler);
+
+const colorSelect = document.createElement("button");
+colorSelect.textContent = "Change Color";
+colorSelect.dataset.currentColor = "yellow";
+colorSelect.addEventListener("click", changeColor);
+menuContainer.appendChild(colorSelect);
 
 createGrid();
