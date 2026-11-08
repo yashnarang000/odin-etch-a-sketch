@@ -1,20 +1,28 @@
 #super-container {
     display: flex;
     flex-direction: column;
+
+    border: 2px solid black;
+
+    height: 100vh;
     height: 100dvh;
+    max-height: 100dvh;
+
     aspect-ratio: 1 / 1;
     margin: 0 auto;
 }
 
-.bordered-container-red {
-    border: 2px solid red;
+.row-container {
+    /* border: 2px solid black; */
     display: flex;
     flex: 1;
+    min-height: 0;
 }
 
-.bordered-container-blue {
-    border: 2px solid blue;
+.square {
+    /* border: 2px solid black; */
     flex: 1;
+    min-height: 0;
 }
 
 .hovered-upon {

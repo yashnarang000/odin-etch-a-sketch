@@ -1,5 +1,4 @@
 function toggleMouse(event) {
-    // let isToggled = event.target.className;
 
     if (event.target.className == "True") {
         event.target.className = "False";
@@ -18,6 +17,13 @@ function toggleMouse(event) {
     }
 }
 
+let nSquare = parseInt(prompt("How many pixels do you want for the sketchpad? (Max: 100)"))
+console.log(nSquare);
+if (isNaN(nSquare) || nSquare > 100) {
+    alert("Invalid!")
+    nSquare = 16;
+}
+
 const menuContainer = document.querySelector("#menu-container");
 const superContainer = document.querySelector("#super-container");
 
@@ -28,15 +34,14 @@ mouseToggler.addEventListener("click", toggleMouse);
 menuContainer.appendChild(mouseToggler);
 
 
-for (let i = 0; i < 16; i++) {
+for (let i = 0; i < nSquare; i++) {
     let hContainer = document.createElement("div");
-    hContainer.classList.add("bordered-container-red");
+    hContainer.classList.add("row-container");
     superContainer.append(hContainer);
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < nSquare; j++) {
         let vContainer = document.createElement("div");
-        vContainer.classList.add("bordered-container-blue");
-        vContainer.textContent = `(${j+1}, ${i+1})`;
+        vContainer.classList.add("square");
 
         vContainer.addEventListener("mouseenter", () => {
             vContainer.classList.add("hovered-upon");
@@ -45,4 +50,3 @@ for (let i = 0; i < 16; i++) {
         hContainer.append(vContainer);
     }
 }
-
